@@ -1,0 +1,13 @@
+# Ignorar arquivos R
+.RData
+.Rhistory
+.rascunho.R
+# Ignorar pastas e diretórios
+beta-diversity-analysis/
+R_arquives/renv/
+Notas.py
+data/
+venv/
+R_arquives/
+*.dll
+*.pyd
