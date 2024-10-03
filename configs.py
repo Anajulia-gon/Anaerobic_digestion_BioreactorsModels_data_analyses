@@ -18,9 +18,9 @@ SCALERS = [
     "QuantileTransformer", "Binarizer", "PowerTransformer", "FunctionTransformer"
 ]
 SHAP_CONFIGS = {
-    "tree_based": ["Random Forest", "Decision Tree", "Gradient Boosting", "Extra Trees", "LightGBM"],
+    "tree_based": ["Random Forest", "Decision Tree", "Gradient Boosting", "Extra Trees", "LightGBM", "XGBoost"],
     "kernel_based": ["Logistic Regression", "AdaBoost", "K-Neighbors"],
-    "gradient_based": ["SGD", "XGBoost"],
+    "gradient_based": ["SGD"],
     "logistic_regression": ["Logistic Regression", "SVM"],
     "default": "tree_based"
 }
@@ -73,10 +73,6 @@ pipelines = {
     ('scaler', 'passthrough'),
     ('classifier', ExtraTreesClassifier(random_state=42))
 ]),
-    "LightGBM": Pipeline([
-        ('scaler', 'passthrough'),
-        ('classifier', lgb.LGBMClassifier(random_state=42))
-    ]),
     "K-Neighbors": Pipeline([
     ('scaler', 'passthrough'),
     ('classifier', KNeighborsClassifier())
@@ -85,7 +81,6 @@ pipelines = {
     ('scaler', 'passthrough'),
     ('classifier', SGDClassifier(random_state=42))  
 ]),
-
     "SVM": Pipeline([
     ('scaler', 'passthrough'),
     ('classifier', SVC(probability=True, random_state=42))  # Definir probability=True para permitir predict_proba
@@ -167,14 +162,8 @@ params = {
     'classifier__bootstrap': [True],  # Usando bootstrap para robustez
     'classifier__class_weight': ['balanced']  # Ajustando o peso das classes para lidar com o desbalanceamento - Da mais peso as classes minoritarias
 },
-    "LightGBM": {
-        'scaler': [None, Normalizer()],
-        'classifier__n_estimators': [100, 200, 300],
-        'classifier__learning_rate': [0.01, 0.1, 1],
-        'classifier__max_depth': [-1, 10, 20, 30]
-    },
         "K-Neighbors":{
-        'scaler': [PowerTransformer(method='yeo-johnson', standardize=False)],  # Incluindo PowerTransformer conforme solicitado
+        'scaler': [None, PowerTransformer(method='yeo-johnson', standardize=False), StandardScaler(), MinMaxScaler(), RobustScaler(), QuantileTransformer(output_distribution='normal'), Normalizer()], 
         'classifier__n_neighbors': [2, 3, 5, 7, 9],
         'classifier__weights': ['uniform', 'distance'],
         'classifier__algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
@@ -183,9 +172,10 @@ params = {
         'classifier__metric': ['minkowski'],
         'classifier__metric_params': [None]  # Mantendo o parâmetro padrão
     }
-,
+, 
 
     "XGBoost": {
+    'scaler':[None],
     'classifier__n_estimators': [200, 100, 75],  # Reduzir o número de estimadores para evitar overfitting em datasets pequenos
     'classifier__learning_rate': [0.01, 0.1, 0.2],  # Mantendo taxas de aprendizado baixas para permitir melhor ajuste
     'classifier__max_depth': [3, 4, 5],  # Limitar a profundidade das árvores para evitar overfitting
@@ -200,7 +190,7 @@ params = {
     'classifier__verbosity': [0]  # Silencia logs desnecessários
 },
     "SGD": {
-    'scaler': [StandardScaler(), MinMaxScaler()],# Priorizar StandardScaler
+    'scaler': [None, StandardScaler(), MinMaxScaler()],# Priorizar StandardScaler
     'classifier__alpha': [0.001, 0.01, 0.1],  # Valores mais altos para evitar overfitting
     'classifier__max_iter': [1000, 1500],# Reduzir para cenários com dados pequenos
     'classifier__penalty': ['l2', 'elasticnet'], # Priorizar L2 e elasticnet para maior estabilidade
@@ -208,7 +198,7 @@ params = {
     'classifier__tol': [0.001, 0.0001] # Mantendo os valores padrões, mas com uma leve ênfase em valores maiores
 },
     "SVM": {
-    'scaler': [StandardScaler(), MinMaxScaler(), RobustScaler(), MaxAbsScaler(), QuantileTransformer()],  # Reduzir as opções de escaladores
+    'scaler': [None, StandardScaler(), MinMaxScaler(), RobustScaler(), MaxAbsScaler(), QuantileTransformer()],  # Reduzir as opções de escaladores
     'classifier__C': [0.01,0.1, 1],  # Manter valores mais baixos para evitar overfitting
     'classifier__kernel': ['linear', 'rbf'],  # Priorizar kernels mais simples
     'classifier__gamma': ['scale'],  # Focar em 'scale' para dados pequenos

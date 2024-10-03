@@ -6,8 +6,8 @@ from configs import SHAP_CONFIGS
 from utils import ensure_directory_exists
 import os
 # Definir os diretórios de salvamento
-SAVE_DIR_SUMMARY = "outputs/HRT/plots/SummaryPlots/"
-SAVE_DIR_WATERFALL = "outputs/HRT/plots/WaterfallPlots/"
+SAVE_DIR_SUMMARY = "C:/Users/Gonza/Desktop/TCC/outputs/Bettle/plots/SummaryPlots/"
+SAVE_DIR_WATERFALL = "C:/Users/Gonza/Desktop/TCC/outputs/Bettle/plots/WaterfallPlots/"
 
 # Gera o tipo de explainer com base no modelo
 def generate_shap_plots(model, model_name, X_train, X_test):
@@ -35,7 +35,7 @@ def plot_shap_tree_based(model, model_name, X_test, SAVE_DIR_SUMMARY=SAVE_DIR_SU
         for i in range(shap_values.shape[2]):
             plt.figure(figsize=(12, 6))
             plt.title(f"SHAP Summary Plot for {model_name} - Class {i}")
-            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, show=False)
+            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=20, show=False)
             plt.tight_layout()
             plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary_class_{i}.png"), bbox_inches='tight')
             print(f"Gráfico salvo: {model_name}_shap_summary_class_{i}.png")
@@ -58,7 +58,7 @@ def plot_shap_tree_based(model, model_name, X_test, SAVE_DIR_SUMMARY=SAVE_DIR_SU
         # Caso o modelo seja binário (shap_values será uma matriz 2D)
         plt.figure(figsize=(12, 6))
         plt.title(f"SHAP Summary Plot for {model_name}")
-        shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, show=False)
+        shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, max_display=20, show=False)
         plt.tight_layout()
         plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary.png"), bbox_inches='tight')
         print(f"Gráfico salvo: {model_name}_shap_summary.png")
@@ -92,7 +92,7 @@ def plot_shap_kernel(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_D
         for i in range(shap_values.shape[2]):
             plt.figure(figsize=(12, 6))
             plt.title(f"SHAP Summary Plot for {model_name} - Class {i}")
-            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, show=False)
+            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=15, show=False)
             plt.tight_layout()
             plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary_class_{i}.png"), bbox_inches='tight')
             print(f"Gráfico salvo: {model_name}_shap_summary_class_{i}.png")
@@ -115,7 +115,7 @@ def plot_shap_kernel(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_D
         # Caso o modelo seja binário (shap_values será uma matriz 2D)
         plt.figure(figsize=(12, 6))
         plt.title(f"SHAP Summary Plot for {model_name}")
-        shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, show=False)
+        shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, max_display=20, show=False)
         plt.tight_layout()
         plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary.png"), bbox_inches='tight')
         print(f"Gráfico salvo: {model_name}_shap_summary.png")
@@ -147,7 +147,7 @@ def plot_shap_gradient_based(model, model_name, X_train, X_test, SAVE_DIR_SUMMAR
     # Exibir o Summary Plot
     plt.figure(figsize=(12, 6))
     plt.title(f"SHAP Summary Plot for {model_name}")
-    shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, show=False)
+    shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, max_display=20, show=False)
     plt.tight_layout()
     plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary.png"), bbox_inches='tight')
     print(f"Gráfico salvo: {model_name}_shap_summary.png")
@@ -180,7 +180,7 @@ def plot_shap_logistic_regression(model, model_name, X_train, X_test, SAVE_DIR_S
     # Exibir o Summary Plot
     plt.figure(figsize=(12, 6))
     plt.title(f"SHAP Summary Plot for {model_name}")
-    shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, show=False)
+    shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, max_display=20, show=False)
     plt.tight_layout()
     plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary.png"), bbox_inches='tight')
     print(f"Gráfico salvo: {model_name}_shap_summary.png")

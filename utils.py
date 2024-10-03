@@ -5,15 +5,15 @@ import pandas as pd
 import joblib
 import os
 # Diretório de destino
-OUTPUT_DIR = "outputs/HRT/gridsearch_results/"
-OUTPUT_MODEL_DIR = "outputs/HRT/best_models/"
+OUTPUT_DIR = "C:/Users/Gonza/Desktop/TCC/outputs/Bettle/gridsearch_results/"
+OUTPUT_MODEL_DIR = "C:/Users/Gonza/Desktop/TCC/outputs/Bettle/best_models/"
 
 # Função para garantir que o diretório exista
 def ensure_directory_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def exportar_csv(model_search, model_name, pipelines, scalers=SCALERS,scaler_mapping= scaler_mapping, OUTPUT_DIR=OUTPUT_DIR, ):
+def exportar_csv(model_search, model_name, pipelines, scalers=SCALERS,scaler_mapping= scaler_mapping, OUTPUT_DIR=OUTPUT_DIR):
       # Checar se a pipeline tem um scaler
     results = []
     cv_results = model_search.cv_results_
@@ -69,7 +69,7 @@ def exportar_csv(model_search, model_name, pipelines, scalers=SCALERS,scaler_map
             results_df = pd.DataFrame(results)
             # Exportar para CSV
             results_df.to_excel(os.path.join(OUTPUT_DIR, f'gridsearch_{model_name}_results.xlsx'), index=False)
-            print(f"Resultados exportados para 'gridsearch_s{model_name}_results.xlsx'")
+            print(f"Resultados exportados para 'gridsearch_{model_name}_results.xlsx'")
 
     else:
             print(f"Scaler não encontrado nos parâmetros do GridSearch para {model_name}.")
