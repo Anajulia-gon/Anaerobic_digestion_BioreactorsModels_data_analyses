@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-from processamento import  X_train, X_test, y_train, y_test
+from processamentoBioreactor import  X_train, X_test, y_train, y_test
 from model_evaluation import evaluate_model2
 from model_evaluation import print_validation_evaluation
 from model_evaluation import print_test_evaluation

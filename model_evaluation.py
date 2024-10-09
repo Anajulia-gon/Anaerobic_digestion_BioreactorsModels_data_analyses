@@ -29,9 +29,9 @@ import os
 from utils import ensure_directory_exists
 # from imblearn.pipeline import ImbalancedPipeline
 # Definir os diretórios de salvamento
-SAVE_DIR_BOXPLOTS = "outputs/Bettle/plots/boxplots/"
-SAVE_DIR_HISTOGRAMS = "outputs/Bettle/plots/histograms/"
-ROC_PRECISION_RECALL_CURVE = "outputs/Bettle/plots/roc_precision_recall_curve/"
+SAVE_DIR_BOXPLOTS = "outputs/HRT/Mean/plots/boxplots2/"
+SAVE_DIR_HISTOGRAMS = "outputs/HRT/Mean/plots/histograms2/"
+ROC_PRECISION_RECALL_CURVE = "outputs/HRT/Mean/plots/roc_precision_recall_curve2/"
 
 def auc_prec_score(y_true, y_pred_proba):
     precision, recall, _ = precision_recall_curve(y_true, y_pred_proba)

@@ -5,8 +5,9 @@ import pandas as pd
 import joblib
 import os
 # Diretório de destino
-OUTPUT_DIR = "C:/Users/Gonza/Desktop/TCC/outputs/Bettle/gridsearch_results/"
-OUTPUT_MODEL_DIR = "C:/Users/Gonza/Desktop/TCC/outputs/Bettle/best_models/"
+
+OUTPUT_DIR = "outputs/Bettle/Div1/gridsearch_results/"
+OUTPUT_MODEL_DIR = "outputs/Bettle/Div1/best_models/"
 
 # Função para garantir que o diretório exista
 def ensure_directory_exists(directory):
