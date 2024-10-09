@@ -19,7 +19,7 @@ SCALERS = [
 ]
 SHAP_CONFIGS = {
     "tree_based": ["Random Forest", "Decision Tree", "Gradient Boosting", "Extra Trees", "LightGBM", "XGBoost"],
-    "kernel_based": ["Logistic Regression", "AdaBoost", "K-Neighbors"],
+    "kernel_based": [ "Logistic Regression", "AdaBoost", "K-Neighbors"],
     "gradient_based": ["SGD"],
     "logistic_regression": ["SVM"],
     "default": "tree_based"

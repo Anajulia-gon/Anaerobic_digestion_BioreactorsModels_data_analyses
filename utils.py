@@ -6,8 +6,8 @@ import joblib
 import os
 # Diretório de destino
 
-OUTPUT_DIR = "outputs/Bettle/Div1/gridsearch_results/"
-OUTPUT_MODEL_DIR = "outputs/Bettle/Div1/best_models/"
+OUTPUT_DIR = "outputs/Bettle/Div1/gridsearch_results2/"
+OUTPUT_MODEL_DIR = "outputs/Bettle/Div1/best_models2/"
 
 # Função para garantir que o diretório exista
 def ensure_directory_exists(directory):

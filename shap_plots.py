@@ -40,7 +40,7 @@ def plot_shap_tree_based(model, model_name, X_test, class_mapping = class_mappin
             class_label = class_mapping.get(i, f"Classe {i}")
             plt.figure(figsize=(12, 6))
             plt.title(f"SHAP Summary Plot for {model_name} - {class_label}", fontsize=12)
-            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=15, show=False)
+            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=20, show=False)
             plt.tight_layout()
             plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary_{class_label}.png"), bbox_inches='tight')
             print(f"Gráfico salvo: {model_name}_shap_summary_{class_label}.png")
@@ -61,7 +61,7 @@ def plot_shap_tree_based(model, model_name, X_test, class_mapping = class_mappin
 
 
 
-def plot_shap_kernel(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_DIR_SUMMARY, SAVE_DIR_WATERFALL=SAVE_DIR_WATERFALL):
+def plot_shap_kernel(model, model_name, X_train, X_test, class_mapping = class_mapping, SAVE_DIR_SUMMARY=SAVE_DIR_SUMMARY, SAVE_DIR_WATERFALL=SAVE_DIR_WATERFALL):
 
     # Verificar e criar os diretórios, se necessário
     ensure_directory_exists(SAVE_DIR_SUMMARY)
@@ -78,7 +78,7 @@ def plot_shap_kernel(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_D
             class_label = class_mapping.get(i, f"Classe {i}")
             plt.figure(figsize=(12, 6))
             plt.title(f"SHAP Summary Plot for {model_name} - {class_label}", fontsize=12)
-            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=12, show=False)
+            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=13, show=False)
             plt.tight_layout()
             plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary_{class_label}.png"), bbox_inches='tight')
             print(f"Gráfico salvo: {model_name}_shap_summary_{class_label}.png")
@@ -121,7 +121,7 @@ def plot_shap_kernel(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_D
         print(f"Gráfico salvo: {model_name}_waterfall_primeira_amostra.png")
         plt.close()
 
-def plot_shap_gradient_based(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_DIR_SUMMARY, SAVE_DIR_WATERFALL=SAVE_DIR_WATERFALL):
+def plot_shap_gradient_based(model, model_name, X_train, X_test, class_mapping = class_mapping, SAVE_DIR_SUMMARY=SAVE_DIR_SUMMARY, SAVE_DIR_WATERFALL=SAVE_DIR_WATERFALL):
 
     # Verificar e criar os diretórios, se necessário
     ensure_directory_exists(SAVE_DIR_SUMMARY)
@@ -157,7 +157,7 @@ def plot_shap_gradient_based(model, model_name, X_train, X_test, SAVE_DIR_SUMMAR
 
 
 
-def plot_shap_linear_based_model(model, model_name, X_train, X_test, SAVE_DIR_SUMMARY=SAVE_DIR_SUMMARY, SAVE_DIR_WATERFALL=SAVE_DIR_WATERFALL):
+def plot_shap_linear_based_model(model, model_name, X_train, X_test, class_mapping = class_mapping, SAVE_DIR_SUMMARY=SAVE_DIR_SUMMARY, SAVE_DIR_WATERFALL=SAVE_DIR_WATERFALL):
 
     # Verificar e criar os diretórios, se necessário
     ensure_directory_exists(SAVE_DIR_SUMMARY)

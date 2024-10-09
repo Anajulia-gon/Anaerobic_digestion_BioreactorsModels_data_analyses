@@ -70,11 +70,11 @@ HRT_all_ra = transform_sample_counts(asv_all_csv)
 HRT_all_abs_ML = asv_all_csv.copy()
 HRT_all_ra_ML = HRT_all_ra.copy()
 
-# Salvando em arquivos CSV
-HRT_all_abs_ML.to_csv(HRT_all_abs_ML_PATH)
-HRT_all_ra_ML.to_csv(HRT_all_ra_ML_PATH)
-asv_all_csv2.to_csv(asv_all_csv2_PATH)
-meta_all_csv.to_csv(meta_all_csv_PATH)
+# # Salvando em arquivos CSV
+# HRT_all_abs_ML.to_csv(HRT_all_abs_ML_PATH)
+# HRT_all_ra_ML.to_csv(HRT_all_ra_ML_PATH)
+# asv_all_csv2.to_csv(asv_all_csv2_PATH)
+# meta_all_csv.to_csv(meta_all_csv_PATH)
 
 # Extração de amostras relevantes para predição
 HRT_metadata_ML_abs_all = meta_all_csv.copy()
@@ -155,13 +155,13 @@ HRT_ML_reactor.drop(columns=zero_asvs, inplace=True)
 HRT_ML_reactor_abs.drop(columns=zero_asvs, inplace=True)
 
 # 3) Divisão dos dados em conjunto de treino e teste
-train_HRT_ML_reactor, test_HRT_ML_reactor = train_test_split(HRT_ML_reactor, test_size=0.25, stratify=HRT_ML_reactor['y'])
+train_HRT_ML_reactor, test_HRT_ML_reactor = train_test_split(HRT_ML_reactor_abs, test_size=0.25, stratify=HRT_ML_reactor['y'])
 
 
 
-# Exportar os dados de treino e teste
-train_HRT_ML_reactor.to_csv(TRAIN_PATH, index=False)
-test_HRT_ML_reactor.to_csv(TEST_PATH, index=False)
+# # Exportar os dados de treino e teste
+# train_HRT_ML_reactor.to_csv(TRAIN_PATH, index=False)
+# test_HRT_ML_reactor.to_csv(TEST_PATH, index=False)
 
 # Carregar os conjuntos de dados - Experimento biorreator
 train_df = train_HRT_ML_reactor.copy()
