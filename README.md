@@ -1,14 +1,12 @@
-# Análise do Metagenoma do Besouro do Sol
+##Metagenomic Analysis of Mixed Anaerobic Microbiomes
+Overview
+This repository contains analyses of two datasets composed of metagenomes from microbiomes. The project focuses on selecting relevant bioindicators for predicting quantitative metrics involved in biogas production assessment. Exploratory analyses will be included to understand the microbial diversity in the samples and to interpret classification models.
 
-## Descrição
-Este repositório contém as análises de dados do metagenoma do besouro do sol (Nome Científico). O projeto visa a seleção de bioindicadores pertinentes para a previsão de métricas quantitativas envolvidas na avaliação da produção de biogás. Serão incluídas análises exploratórias para entender a diversidade microbiana associada as amostras e disperção e tendencia central das métricas de produção.
-
-## Estrutura do Repositório
-- `data/`: Dados brutos e processados.
-- `notebooks/`: Jupyter notebooks com as análises.
-- `scripts/`: Scripts utilizados nas análises.
-- `results/`: Resultados das análises.
-- `docs/`: Documentação adicional.
+##Repository Structure
+-notebooks/: Jupyter notebooks containing the analyses.
+-scripts/: Scripts used in the analyses.
+-results/: Results from the analyses.
+-docs/: Additional documentation.
 
 ## Configuração
 1. Clone este repositório:
@@ -19,14 +17,19 @@ Este repositório contém as análises de dados do metagenoma do besouro do sol 
     ```bash
     pip install -r requirements.txt
     ```
+#Execution
+-Data Collection: The datasets are stored on a private server, consisting of separate FASTA files averaging 20.8475GB and 16.4627GB, sourced from Data Sources 1 and 2, respectively. The total size is 2,125.63GB.
+-Data Preprocessing: Using the MuDoGeR tool, sequences were cleaned and organized, while biologically significant information was extracted and summarized into tables.
+-Data Loading and Transformation: Relative abundance tables of OTUs were loaded into DataFrames for further manipulation. Typing and grouping were performed, and metadata tables were merged to create categorical variable columns.
+-Exploratory Data Analysis (EDA): Alpha and Beta diversity of the communities were explored.
+-Data Modeling: The data was prepared for machine learning pipelines.
+-Model Evaluation: Model performance was assessed using G-mean and GridSearch.
+-Model Interpretation: SHAP plots were generated for model interpretation.
 
-## Execução
-Para rodar as análises, abra os notebooks na pasta `notebooks/` e siga as instruções de cada um.
-
-## Resultados Principais
-- **Diversidade microbiana**: Descrição dos principais achados sobre a diversidade microbiana associada ao besouro do sol.
-- **Funções microbianas**: Análise das principais funções desempenhadas pelas comunidades microbianas.
+## Main Results
+Microbial Diversity: Key findings on the microbial diversity associated with the Sun beetle.
+Microbial Functions: Initial analysis of the role played by the main attributes of the microbial communities.
 
 ## Contato
-Autor: Seu Nome  
-Email: seu.email@example.com
+Autor: Ana Julia  
+Email: ana.tendulini@gmail.com
