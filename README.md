@@ -5,8 +5,8 @@ This repository contains analyses of two datasets composed of metagenomes from m
 ## Repository Structure
 - notebooks/: Jupyter notebooks containing the analyses.
 - scripts/: Scripts used in the analyses.
-- results/: Results from the analyses.
--d ocs/: Additional documentation.
+- outputs/: Results from the analyses.
+-docs/: Additional documentation.
 
 ## Setup
 1. Clone this repository:
