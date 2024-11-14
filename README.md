@@ -1,4 +1,4 @@
-# Metagenomic Analysis of Mixed Anaerobic Microbiomes
+# Metagenomic Bioindicator Analysis for Biogas Production Assessment in Anaerobic Microbiomes
 ## Overview
 This repository contains analyses of two datasets composed of metagenomes from microbiomes. The project focuses on selecting relevant bioindicators for predicting quantitative metrics involved in biogas production assessment. Exploratory analyses will be included to understand the microbial diversity in the samples along with the interpretation of trained classification models.
 
