@@ -89,7 +89,7 @@ def plot_shap_kernel(model, model_name, X_train, X_test, class_mapping = class_m
             class_label = class_mapping.get(i, f"Classe {i}")
             plt.figure(figsize=(12, 6))
             plt.title(f"SHAP Summary Plot for {model_name} - {class_label}", fontsize=12)
-            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=15, show=False)
+            shap.summary_plot(shap_values[:, :, i], X_test, feature_names=X_test.columns, max_display=10, show=False)
             plt.tight_layout()
             plt.savefig(os.path.join(SAVE_DIR_SUMMARY, f"{model_name}_shap_summary_{class_label}.png"), bbox_inches='tight')
             print(f"Gráfico salvo: {model_name}_shap_summary_{class_label}.png")
