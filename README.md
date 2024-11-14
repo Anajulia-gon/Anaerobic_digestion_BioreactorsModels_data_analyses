@@ -21,7 +21,7 @@ This repository contains analyses of two datasets composed of metagenomes from m
     ```bash
     poetry install
     ```
-    and activate enviromment created
+    and activate virtual environment created
     ```bash
     poetry shell
     ```
