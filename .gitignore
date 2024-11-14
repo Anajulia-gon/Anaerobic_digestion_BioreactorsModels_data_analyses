@@ -5,9 +5,14 @@
 # Ignorar pastas e diretórios
 beta-diversity-analysis/
 R_arquives/renv/
+/scripts/main2
 Notas.py
 data/
 venv/
 R_arquives/
+monografia/
+ApresentacaoTCC/
+Reuniões/
 *.dll
 *.pyd
+

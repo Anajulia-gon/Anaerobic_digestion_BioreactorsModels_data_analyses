@@ -20,9 +20,7 @@ SCALERS = [
 SHAP_CONFIGS = {
     "tree_based": ["Random Forest", "Decision Tree", "Gradient Boosting", "Extra Trees", "LightGBM", "XGBoost"],
     "kernel_based": [ "Logistic Regression", "AdaBoost", "K-Neighbors"],
-    "gradient_based": ["SGD"],
-    "logistic_regression": ["SVM"],
-    "default": "tree_based"
+    "logistic_regression": ["SVM", "SGD"]
 }
 scaler_mapping = {
     "None": None,
@@ -37,10 +35,6 @@ scaler_mapping = {
 }
 
 pipelines = {
-    # "Logistic Regression": Pipeline([
-    #     ('scaler', 'passthrough'),
-    #     ('classifier', LogisticRegression(multi_class='ovr', solver='lbfgs', max_iter=500))   # configurado para classificação multiclass
-    # ]),
     "Logistic Regression": Pipeline([
     ('scaler', 'passthrough'),    # Escalonamento
     ('classifier', LogisticRegression(random_state=42))
@@ -84,17 +78,19 @@ pipelines = {
     "SVM": Pipeline([
     ('scaler', 'passthrough'),
     ('classifier', SVC(probability=True, random_state=42))  # Definir probability=True para permitir predict_proba
-]),
+])
 
-    "XGBoost": Pipeline([
-    ('scaler', 'passthrough'),  # Utilize o escalador conforme necessário
-    ('classifier', xgb.XGBClassifier(
-        eval_metric='logloss',
-        objective='binary:logistic',  # Para early stopping
-        n_jobs=-1
-    ))
-    ])
+    # "XGBoost": Pipeline([
+    # ('scaler', 'passthrough'),  # Utilize o escalador conforme necessário
+    # ('classifier', xgb.XGBClassifier(
+    #     eval_metric='logloss',
+    #     objective='binary:logistic',  # Para early stopping
+    #     n_jobs=-1
+    # ))
+    # ])
 }
+
+
 
 params = {
     "Logistic Regression": {
@@ -163,7 +159,7 @@ params = {
     'classifier__class_weight': ['balanced']  # Ajustando o peso das classes para lidar com o desbalanceamento - Da mais peso as classes minoritarias
 },
         "K-Neighbors":{
-        'scaler': [None, PowerTransformer(method='yeo-johnson', standardize=False), StandardScaler(), MinMaxScaler(), RobustScaler(), QuantileTransformer(output_distribution='normal'), Normalizer()], 
+        'scaler': [None, PowerTransformer(method='yeo-johnson', standardize=False), StandardScaler(), MinMaxScaler(), RobustScaler(), QuantileTransformer(n_quantiles=32, output_distribution='normal'), Normalizer()], 
         'classifier__n_neighbors': [2, 3, 5, 7, 9],
         'classifier__weights': ['uniform', 'distance'],
         'classifier__algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
@@ -174,21 +170,21 @@ params = {
     }
 , 
 
-    "XGBoost": {
-    'scaler':[None],
-    'classifier__n_estimators': [200, 100, 75],  # Reduzir o número de estimadores para evitar overfitting em datasets pequenos
-    'classifier__learning_rate': [0.01, 0.1, 0.2],  # Mantendo taxas de aprendizado baixas para permitir melhor ajuste
-    'classifier__max_depth': [3, 4, 5],  # Limitar a profundidade das árvores para evitar overfitting
-    'classifier__min_child_weight': [1, 3],  # Controle de regularização, mais alto é mais conservador
-    'classifier__gamma': [0, 0.1, 0.2],  # Reduz o risco de overfitting ao exigir uma maior redução de perda
-    'classifier__subsample': [0.7, 0.8],  # Usar uma amostragem menor pode ajudar a reduzir overfitting
-    'classifier__colsample_bytree': [0.7, 0.8],  # Amostragem de colunas para regularização adicional
-    'classifier__objective': ['binary:logistic'],  # Definido para problemas de classificação binária
-    'classifier__reg_alpha': [0, 0.1, 0.5, 1],  # Regularização L1 para reduzir coeficientes não importantes
-    'classifier__reg_lambda': [0.5, 1, 10],  # Regularização L2 para evitar grandes coeficientes
-    'classifier__scale_pos_weight': [1, 0.5, 2, 3],  # Compensação para desbalanceamento de classes
-    'classifier__verbosity': [0]  # Silencia logs desnecessários
-},
+#     "XGBoost": {
+#     'scaler':[None],
+#     'classifier__n_estimators': [200, 100, 75],  # Reduzir o número de estimadores para evitar overfitting em datasets pequenos
+#     'classifier__learning_rate': [0.01, 0.1, 0.2],  # Mantendo taxas de aprendizado baixas para permitir melhor ajuste
+#     'classifier__max_depth': [3, 4, 5],  # Limitar a profundidade das árvores para evitar overfitting
+#     'classifier__min_child_weight': [1, 3],  # Controle de regularização, mais alto é mais conservador
+#     'classifier__gamma': [0, 0.1, 0.2],  # Reduz o risco de overfitting ao exigir uma maior redução de perda
+#     'classifier__subsample': [0.7, 0.8],  # Usar uma amostragem menor pode ajudar a reduzir overfitting
+#     'classifier__colsample_bytree': [0.7, 0.8],  # Amostragem de colunas para regularização adicional
+#     'classifier__objective': ['binary:logistic'],  # Definido para problemas de classificação binária
+#     'classifier__reg_alpha': [0, 0.1, 0.5, 1],  # Regularização L1 para reduzir coeficientes não importantes
+#     'classifier__reg_lambda': [0.5, 1, 10],  # Regularização L2 para evitar grandes coeficientes
+#     'classifier__scale_pos_weight': [1, 0.5, 2, 3],  # Compensação para desbalanceamento de classes
+#     'classifier__verbosity': [0]  # Silencia logs desnecessários
+# },
     "SGD": {
     'scaler': [None, StandardScaler(), MinMaxScaler()],# Priorizar StandardScaler
     'classifier__alpha': [0.001, 0.01, 0.1],  # Valores mais altos para evitar overfitting
@@ -198,7 +194,7 @@ params = {
     'classifier__tol': [0.001, 0.0001] # Mantendo os valores padrões, mas com uma leve ênfase em valores maiores
 },
     "SVM": {
-    'scaler': [None, StandardScaler(), MinMaxScaler(), RobustScaler(), MaxAbsScaler(), QuantileTransformer()],  # Reduzir as opções de escaladores
+    'scaler': [None, StandardScaler(), MinMaxScaler(), RobustScaler(), MaxAbsScaler(), QuantileTransformer(n_quantiles=32)],  # Reduzir as opções de escaladores
     'classifier__C': [0.01,0.1, 1],  # Manter valores mais baixos para evitar overfitting
     'classifier__kernel': ['linear', 'rbf'],  # Priorizar kernels mais simples
     'classifier__gamma': ['scale'],  # Focar em 'scale' para dados pequenos

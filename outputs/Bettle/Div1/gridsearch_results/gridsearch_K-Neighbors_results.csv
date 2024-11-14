@@ -1,2 +1,0 @@
-Model,Scaler,Best Params,Mean g_mean test,Std Dev g_mean test,Mean g_mean train,Std Dev g_mean trai
-K-Neighbors,PowerTransformer,"{'classifier__algorithm': 'auto', 'classifier__leaf_size': 10, 'classifier__metric': 'minkowski', 'classifier__metric_params': None, 'classifier__n_neighbors': 2, 'classifier__p': 1, 'classifier__weights': 'uniform', 'scaler': PowerTransformer(standardize=False)}",1.0,0.0,1.0,0.0

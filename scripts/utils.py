@@ -4,10 +4,11 @@ import numpy as np
 import pandas as pd
 import joblib
 import os
-# Diretório de destino
 
-OUTPUT_DIR = "outputs/Bettle/Div1/gridsearch_results2/"
-OUTPUT_MODEL_DIR = "outputs/Bettle/Div1/best_models2/"
+# Directories for saving plots
+
+OUTPUT_DIR = "outputs/Bettle/Div1/gridsearch_results3/"
+OUTPUT_MODEL_DIR = "outputs/Bettle/Div1/best_models/"
 
 # Função para garantir que o diretório exista
 def ensure_directory_exists(directory):

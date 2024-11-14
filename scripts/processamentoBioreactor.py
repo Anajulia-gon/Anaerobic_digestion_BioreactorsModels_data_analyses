@@ -2,6 +2,9 @@ import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+
+
+
 # Função para carregar arquivos e verificar se estão vazios
 def load_asv_file(file_path):
     if os.path.exists(file_path):
@@ -28,27 +31,31 @@ def transform_sample_counts(df):
 
 TRAIN_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/06_train_HRT_2Class.csv"
 TEST_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/06_test_HRT_2Class.csv"
-HRT_all_abs_ML_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/05_asv_bin_ML_abs_amerge.csv"
-HRT_all_ra_ML_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/05_asv_bin_ML_ra_calc_amerge.csv"
-asv_all_csv2_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/05_asv_bin_ML_ra_read_amerge.csv"
 meta_all_csv_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/04_metadata_bin_ML_abs.csv"
+# HRT_all_abs_ML_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/05_asv_bin_ML_abs_before_merge.csv"
+# HRT_all_ra_ML_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/05_asv_bin_ML_ra_calc_before_merge.csv"
+# asv_all_csv2_PATH="C:/Users/Gonza/Desktop/TCC/data/data_all/05_asv_bin_ML_ra_read_before_merge.csv"
+
 
 
 # Carregando arquivos ASV
-asv_all_file = "C:/Users/Gonza/Desktop/TCC/data/data_all/map_complete_absolute_n_hits_table.tsv"
+asv_all_file = "C:/Users/Gonza/Desktop/TCC/data/data_all/01_map_complete_absolute_n_hits_table.tsv"
 
 asv_all_csv = load_asv_file(asv_all_file)
 
-asv_all_file2 = "C:/Users/Gonza/Desktop/TCC/data/data_all/map_complete_relative_abundance_table.tsv"
+asv_all_file2 = "C:/Users/Gonza/Desktop/TCC/data/data_all/01_map_complete_relative_abundance_table.tsv"
 asv_all_csv2 = load_asv_file(asv_all_file2)
+
+# Carregar o arquivo de metadados
+meta_all_file = "data/data_all/01_metadata_productivity.txt"
+meta_all_csv = pd.read_csv(meta_all_file, sep="\t", index_col=0)
 
 # Salvar o original
 asv_all_csv_original = asv_all_csv.copy()
 
-# Converter todas as colunas para numérico (se apropriado)
+# Converter todas as colunas para numérico
 asv_all_csv = asv_all_csv.apply(pd.to_numeric, errors='coerce')
 asv_all_csv2 = asv_all_csv2.apply(pd.to_numeric, errors='coerce')
-
 
 
 # Substituir NA por um pseudo-count pequeno (1e-6)
@@ -57,12 +64,7 @@ asv_all_csv.fillna(pseudo_count, inplace=True)
 asv_all_csv2.fillna(pseudo_count, inplace=True)
 print(asv_all_csv.isna().sum().sum())
 
-
-# Carregar o arquivo de metadados
-meta_all_file = "data/data_all/01_metadata_all.txt"
-meta_all_csv = pd.read_csv(meta_all_file, sep="\t", index_col=0)
-
-
+# Calcular o valor absoluto para absolute values
 HRT_all_ra = transform_sample_counts(asv_all_csv)
 
 
@@ -70,7 +72,7 @@ HRT_all_ra = transform_sample_counts(asv_all_csv)
 HRT_all_abs_ML = asv_all_csv.copy()
 HRT_all_ra_ML = HRT_all_ra.copy()
 
-# # Salvando em arquivos CSV
+# # Salvando em arquivos CSV para verificação
 # HRT_all_abs_ML.to_csv(HRT_all_abs_ML_PATH)
 # HRT_all_ra_ML.to_csv(HRT_all_ra_ML_PATH)
 # asv_all_csv2.to_csv(asv_all_csv2_PATH)
@@ -116,8 +118,6 @@ HRT_asv_ML_all['SampleID'] = HRT_asv_ML_all['SampleID'].astype(str).str.strip()
 HRT_metadata_ML_all['SampleID'] = HRT_metadata_ML_all['SampleID'].astype(str).str.strip()
 
 
-
-
 # Realizar merge para unir as tabelas
 HRT_ML_reactor_abs = pd.merge(HRT_asv_ML_abs_all, HRT_metadata_ML_abs_all[['SampleID', 'Experiment']], on='SampleID', how='inner')
 HRT_ML_reactor = pd.merge(HRT_asv_ML_all, HRT_metadata_ML_all[['SampleID', 'Experiment']], on='SampleID', how='inner')
@@ -155,9 +155,12 @@ HRT_ML_reactor.drop(columns=zero_asvs, inplace=True)
 HRT_ML_reactor_abs.drop(columns=zero_asvs, inplace=True)
 
 # 3) Divisão dos dados em conjunto de treino e teste
-train_HRT_ML_reactor, test_HRT_ML_reactor = train_test_split(HRT_ML_reactor_abs, test_size=0.25, stratify=HRT_ML_reactor['y'])
-
-
+train_HRT_ML_reactor, test_HRT_ML_reactor = train_test_split(
+    HRT_ML_reactor_abs, 
+    test_size=0.25, 
+    stratify=HRT_ML_reactor['y'],     
+    random_state=42  # Garantir a reprodutibilidade da divisão
+    )
 
 # # Exportar os dados de treino e teste
 # train_HRT_ML_reactor.to_csv(TRAIN_PATH, index=False)

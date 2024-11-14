@@ -27,12 +27,15 @@ import logging
 from sklearn.metrics import classification_report
 import os
 from utils import ensure_directory_exists
-# from imblearn.pipeline import ImbalancedPipeline
-# Definir os diretórios de salvamento
 
-SAVE_DIR_BOXPLOTS = "outputs/Bettle/Div1/plots/boxplotsexluir/"
-SAVE_DIR_HISTOGRAMS = "outputs/Bettle/Div1/plots/histogramsexluir/"
-ROC_PRECISION_RECALL_CURVE = "outputs/Bettle/Div1/plots/roc_precision_recall_curveexluir/"
+
+# Set global plot configurations
+plt.rc('font', family='Times New Roman', size=12)
+
+# Directories for saving plots
+SAVE_DIR_BOXPLOTS = "outputs/Bettle/Div1/plots/boxplotsexluir3/"
+SAVE_DIR_HISTOGRAMS = "outputs/Bettle/Div1/plots/histogramsexluir3/"
+ROC_PRECISION_RECALL_CURVE = "outputs/Bettle/Div1/plots/roc_precision_recall_curveexluir3/"
 
 def auc_prec_score(y_true, y_pred_proba):
     precision, recall, _ = precision_recall_curve(y_true, y_pred_proba)
@@ -246,11 +249,11 @@ def print_validation_evaluation(grid_search, SAVE_DIR_BOXPLOTS=SAVE_DIR_BOXPLOTS
     plt.close()
 
 
-def print_test_evaluation(grid_search, X_test, y_test, ROC_PRECISION_RECALL_CURVE=ROC_PRECISION_RECALL_CURVE):
+def print_test_evaluation(best_model, X_test, y_test, ROC_PRECISION_RECALL_CURVE=ROC_PRECISION_RECALL_CURVE):
     ensure_directory_exists(ROC_PRECISION_RECALL_CURVE)
       # Avaliar o modelo treinado no conjunto de teste
-    best_model = grid_search.best_estimator_
-    model_name = best_model.named_steps['classifier'].__class__.__name__
+    # best_model = grid_search.best_estimator_
+    model_name = best_model.named_steps['classifier'].__class__.__name__   # extrai o nome da classe do classificador
     # Prever as probabilidades no conjunto de teste
     y_test_pred_proba = best_model.predict_proba(X_test)[:, 1]
 
@@ -283,19 +286,19 @@ def print_test_evaluation(grid_search, X_test, y_test, ROC_PRECISION_RECALL_CURV
     # Plotando a curva ROC-AUC para o conjunto de teste
     plt.figure(figsize=(12, 6))
     plt.subplot(1, 2, 1)
-    plt.plot(fpr_test, tpr_test, label=f'Test ROC curve (AUC = {roc_auc_test:.2f})', color='b')
+    plt.plot(fpr_test, tpr_test, label=f'Curva ROC (AUC = {roc_auc_test:.2f})', color='b')
     plt.plot([0, 1], [0, 1], color='grey', linestyle='--')
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('ROC Curve (Test)')
+    plt.xlabel('Taxa de Falso Positivo')
+    plt.ylabel('Taxa de Falso Negativo')
+    plt.title('Curva ROC (Test)')
     plt.legend(loc="best")
 
     # Plotando a curva Precision-Recall para o conjunto de teste
     plt.subplot(1, 2, 2)
-    plt.plot(recall_test, precision_test, label=f'Test Precision-Recall curve (AUC = {auc_prec_test:.2f})', color='b')
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
-    plt.title('Precision-Recall Curve (Test)')
+    plt.plot(recall_test, precision_test, label=f'Curva de Precisão-Revocação Test (AUC = {auc_prec_test:.2f})', color='b')
+    plt.xlabel('Revocação')
+    plt.ylabel('Precisão')
+    plt.title('Curva de Precisão-Revocação (Test)')
     plt.legend(loc="best")
     plt.savefig(os.path.join(ROC_PRECISION_RECALL_CURVE, f"histograms_g_mean_roc_auc_auc_prec_{model_name}.png"))
     # Exibir os gráficos

@@ -1,7 +1,7 @@
 from configs import pipelines  # Hiperparâmetros
 from configs import params
 from configs import SCALERS
-from processamento_HRT import  X_train, X_test, y_train, y_test, class_mapping
+from processamento_HRT import  X_train, X_test, y_train, y_test
 from utils import load_model
 from shap_plots import generate_shap_plots
 from limeplots import generate_lime_explanation
@@ -9,12 +9,15 @@ from sklearn.metrics import classification_report
 
 
 for model_name in pipelines:
-    print(f"Running GridSearch for {model_name}")
 
     # Carregar o melhor modelo salvo
     best_model = load_model(model_name)
     print(best_model)
-
+    best_model.fit(X_train, y_train)
+    if best_model.named_steps['scaler'] is not None:
+        X_test_transformed = best_model.named_steps['scaler'].transform(X_test)
+    else:
+        X_test_transformed = X_test
     # Avaliar no conjunto de teste
     print(classification_report(y_test, best_model.predict(X_test)))
 

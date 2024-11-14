@@ -10,3 +10,5 @@ lime
 imblearn
 ipython
 openpyxl
+scikit-bio
+scipy
