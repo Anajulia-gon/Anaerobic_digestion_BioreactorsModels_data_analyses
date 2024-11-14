@@ -17,6 +17,15 @@ This repository contains analyses of two datasets composed of metagenomes from m
     ```bash
     pip install -r docs/requirements.txt
     ```
+    or
+    ```bash
+    poetry install
+    ```
+    and activate enviromment created
+    ```bash
+    poetry shell
+    ```
+   
 ## Execution
 - **Data Collection**: The datasets are stored on a private server, consisting of separate FASTA files averaging 20.8475GB and 16.4627GB, sourced from Data Sources 1 and 2, respectively. The total size is 2,125.63GB.
 - **Data Preprocessing**: Using the MuDoGeR tool, sequences were cleaned and organized, while biologically significant information was extracted and summarized into tables.
